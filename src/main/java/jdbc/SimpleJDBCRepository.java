@@ -122,12 +122,9 @@ public class SimpleJDBCRepository {
             preparedStatement.executeUpdate();
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
-                return User.builder()
-                        .id(generatedKeys.getLong("id"))
-                        .firstName(generatedKeys.getString("firstname"))
-                        .lastName(generatedKeys.getString("lastname"))
-                        .age(generatedKeys.getInt("age"))
-                        .build();
+                user.setId(generatedKeys.getLong("id"));
+                return user;
+
             }
             return null;
         } catch (SQLException e) {
