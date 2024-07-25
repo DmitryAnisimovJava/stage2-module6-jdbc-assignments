@@ -36,13 +36,13 @@ public class SimpleJDBCRepository {
     private static final String findUserByNameSQL = "SELECT * FROM myusers WHERE firstname LIKE ?";
     private static final String findAllUserSQL = "SELECT * FROM myusers";
 
-    public Long createUser() {
+    public Long createUser(User user) {
         try (Connection connection = CUSTOM_CONNECTOR.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(createUserSQL,
                                                                                Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setString(1, "firstname");
-            preparedStatement.setString(2, "lastname");
-            preparedStatement.setInt(3, 20);
+            preparedStatement.setString(1, user.getFirstName());
+            preparedStatement.setString(2, user.getLastName());
+            preparedStatement.setInt(3, user.getAge());
             preparedStatement.executeUpdate();
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -111,14 +111,14 @@ public class SimpleJDBCRepository {
         }
     }
 
-    public User updateUser() {
+    public User updateUser(User user) {
         try (Connection connection = CUSTOM_CONNECTOR.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(updateUserSQL,
                                                                                Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setString(1, "newFirstName");
-            preparedStatement.setString(2, "newLastName");
-            preparedStatement.setInt(3, 25);
-            preparedStatement.setLong(4, 1);
+            preparedStatement.setString(1, user.getFirstName());
+            preparedStatement.setString(2, user.getLastName());
+            preparedStatement.setInt(3, user.getAge());
+            preparedStatement.setLong(4, user.getId());
             preparedStatement.executeUpdate();
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
