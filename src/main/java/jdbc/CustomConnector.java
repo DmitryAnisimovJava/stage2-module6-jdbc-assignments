@@ -6,10 +6,6 @@ import java.sql.SQLException;
 
 public class CustomConnector {
 
-    {
-        load();
-    }
-
     public Connection getConnection(String url) {
         try {
             return DriverManager.getConnection(url);
@@ -26,11 +22,4 @@ public class CustomConnector {
         }
     }
 
-    private static void load() {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }
