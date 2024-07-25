@@ -135,7 +135,7 @@ public class SimpleJDBCRepository {
         }
     }
 
-    private void deleteUser(Long userId) {
+    public void deleteUser(Long userId) {
         try (Connection connection = CUSTOM_CONNECTOR.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(deleteUser)) {
             preparedStatement.setLong(1, userId);
